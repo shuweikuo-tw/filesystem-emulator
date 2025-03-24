@@ -40,10 +40,17 @@ const App = () => {
         }
         break;
       }
-      case "delete":
-        newStructure = deleteDirectory(newStructure, path);
-        newOutput.push(`DELETE ${path}`);
+      case "delete": {
+        const result = deleteDirectory(newStructure, path);
+        if (result.error) {
+          //newOutput.push(`DELETE ${path}`);
+          newOutput.push(result.error);
+        } else {
+          newStructure = result.structure;
+          newOutput.push(`DELETE ${path}`);
+        }
         break;
+      }
       case "list":
         newOutput.push("LIST");
         newOutput.push(listDirectories(newStructure));
@@ -58,7 +65,6 @@ const App = () => {
 
     setStructure(newStructure);
     setOutput((prev) => [...prev, `/$ ${command}`, ...newOutput]);
-    console.log(`${output}`);
   };
 
   return (

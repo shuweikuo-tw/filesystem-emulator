@@ -21,12 +21,12 @@ export function moveDirectory(newStructure, source, destination) {
   let destParent = newStructure;
 
   for (let i = 0; i < sourceParts.length - 1; i++) {
-    if (!srcParent[sourceParts[i]]) return structure;
+    if (!srcParent[sourceParts[i]]) return newStructure;
     srcParent = srcParent[sourceParts[i]];
   }
 
   const movingDir = srcParent[sourceParts[sourceParts.length - 1]];
-  if (!movingDir) return structure;
+  if (!movingDir) return newStructure;
   delete srcParent[sourceParts[sourceParts.length - 1]];
 
   for (const part of destParts) {
@@ -41,12 +41,20 @@ export function moveDirectory(newStructure, source, destination) {
 export function deleteDirectory(newStructure, path) {
   const parts = path.split("/");
   let current = newStructure;
+  // 從最外層開始檢查。
   for (let i = 0; i < parts.length - 1; i++) {
-    if (!current[parts[i]]) return structure;
+    if (!current[parts[i]]) {
+      // 如果找不到這個part，就回傳錯誤訊息。
+      return { error: `Cannot delete ${path} - ${parts[i]} does not exist` , structure: newStructure };
+    }
     current = current[parts[i]];
   }
+  if (!current[parts[parts.length - 1]]) {
+    // 如果找不到這個part，就回傳錯誤訊息。
+    return { error: `Cannot delete ${path} - ${parts[parts.length - 1]} does not exist`, structure: newStructure };
+  }
   delete current[parts[parts.length - 1]];
-  return newStructure;
+  return { error: null, structure: newStructure };
 }
 
 export function listDirectories(newStructure, prefix = "") {

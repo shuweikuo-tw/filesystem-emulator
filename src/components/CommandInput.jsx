@@ -26,7 +26,7 @@ const CommandInput = ({ executeCommand }) => {
         placeholder="Enter command..."
         rows={1}
         onChange={(e) => setCommand(e.target.value)}
-        onKeyDown={(e) => e.key === "Enter" && handleExecute()}
+        onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleExecute())}
         autoFocus
       />
     </div>
