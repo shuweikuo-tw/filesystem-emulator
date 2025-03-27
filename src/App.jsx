@@ -64,13 +64,14 @@ const App = () => {
     }
 
     setStructure(newStructure);
-    setOutput((prev) => [...prev, `/$ ${command}`, ...newOutput]);
+    
+    setOutput((prev) => [...prev, ...newOutput]);
   };
 
   return (
     <div className="app-container">
       <div className="left-panel">
-        <DirectoryTree structure={structure} />
+        {/* <DirectoryTree structure={structure} /> */}
       </div>
       <div className="right-panel">
         <div className="output-section">
@@ -82,7 +83,7 @@ const App = () => {
             <li><strong>LIST</strong> - Show the directory structure</li>
           </ul>
           {/* 這邊用`pre`呈現資料結構的上下階層 */}
-          <pre>{output.join("\n")}</pre>
+          <pre role="textarea">{output.join("\n")}</pre>
           <CommandInput executeCommand={executeCommand} />
         </div>
       </div>
