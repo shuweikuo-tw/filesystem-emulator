@@ -13,10 +13,20 @@
       color: #ffffff;
     }
   </style>
-  <script type="module" crossorigin src="./assets/index-D2yrOh53.js"></script>
+  <link rel="manifest" href="./manifest.json">
+  <script type="module" crossorigin src="./assets/index-DJmIza8o.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/index-CsTGPVJ_.css">
-</head>
+<link rel="manifest" href="./manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="./registerSW.js"></script></head>
 <body>
   <div id="root"></div>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("/sw.js").catch((error) => {
+          console.error("Service Worker registration failed:", error);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
